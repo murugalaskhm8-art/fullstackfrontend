@@ -1,1 +1,388 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <title>Expense Tracker</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <main class="app-container">
+
+    <!-- HEADER -->
+    <header class="page-header">
+      <div>
+        <div class="brand">
+          <div class="brand-icon">₹</div>
+          <span>Expense Tracker</span>
+        </div>
+
+        <h1>Manage Your Expenses</h1>
+
+        <p>
+          Plan your regular expenses and keep track of your daily spending.
+        </p>
+      </div>
+    </header>
+
+
+    <!-- MONTHLY EXPENSES -->
+    <section class="card">
+
+      <div class="section-heading">
+        <div>
+          <h2>Monthly Expenses</h2>
+          <p>
+            Enter how much you expect to spend on each category every month.
+          </p>
+        </div>
+      </div>
+
+      <div class="monthly-grid">
+
+        <!-- FOOD -->
+        <div class="expense-input">
+          <label for="food">Food</label>
+
+          <div class="amount-input">
+            <span>₹</span>
+            <input
+              type="number"
+              id="food"
+              class="monthly-amount"
+              data-category="food"
+              min="0"
+              step="0.01"
+              placeholder="Enter amount"
+            />
+          </div>
+        </div>
+
+
+        <!-- TRANSPORTATION -->
+        <div class="expense-input">
+          <label for="transportation">Transportation</label>
+
+          <div class="amount-input">
+            <span>₹</span>
+            <input
+              type="number"
+              id="transportation"
+              class="monthly-amount"
+              data-category="transportation"
+              min="0"
+              step="0.01"
+              placeholder="Enter amount"
+            />
+          </div>
+        </div>
+
+
+        <!-- RENT -->
+        <div class="expense-input">
+          <label for="rent">Rent</label>
+
+          <div class="amount-input">
+            <span>₹</span>
+            <input
+              type="number"
+              id="rent"
+              class="monthly-amount"
+              data-category="rent"
+              min="0"
+              step="0.01"
+              placeholder="Enter amount"
+            />
+          </div>
+        </div>
+
+
+        <!-- GROCERIES -->
+        <div class="expense-input">
+          <label for="groceries">Groceries</label>
+
+          <div class="amount-input">
+            <span>₹</span>
+            <input
+              type="number"
+              id="groceries"
+              class="monthly-amount"
+              data-category="groceries"
+              min="0"
+              step="0.01"
+              placeholder="Enter amount"
+            />
+          </div>
+        </div>
+
+
+        <!-- INTERNET -->
+        <div class="expense-input">
+          <label for="internet">Internet</label>
+
+          <div class="amount-input">
+            <span>₹</span>
+            <input
+              type="number"
+              id="internet"
+              class="monthly-amount"
+              data-category="internet"
+              min="0"
+              step="0.01"
+              placeholder="Enter amount"
+            />
+          </div>
+        </div>
+
+
+        <!-- GAS -->
+        <div class="expense-input">
+          <label for="gas">Gas</label>
+
+          <div class="amount-input">
+            <span>₹</span>
+            <input
+              type="number"
+              id="gas"
+              class="monthly-amount"
+              data-category="gas"
+              min="0"
+              step="0.01"
+              placeholder="Enter amount"
+            />
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- DAILY EXTRA EXPENSE -->
+    <section class="card">
+
+      <div class="section-heading">
+        <div>
+          <h2>Daily Extra Expenses</h2>
+          <p>
+            Record unexpected or additional expenses.
+          </p>
+        </div>
+      </div>
+
+
+      <form id="extraExpenseForm">
+
+        <div class="form-grid">
+
+          <!-- DATE -->
+          <div class="form-group">
+            <label for="expenseDate">Select Date</label>
+
+            <div class="input-with-icon">
+              <span class="field-icon">📅</span>
+
+              <input
+                type="date"
+                id="expenseDate"
+              />
+            </div>
+
+            <small class="error-message" id="dateError"></small>
+          </div>
+
+
+          <!-- AMOUNT -->
+          <div class="form-group">
+            <label for="extraAmount">Extra Expense Amount</label>
+
+            <div class="amount-input">
+              <span>₹</span>
+
+              <input
+                type="number"
+                id="extraAmount"
+                min="0"
+                step="0.01"
+                placeholder="Enter amount"
+              />
+            </div>
+
+            <small class="error-message" id="amountError"></small>
+          </div>
+
+        </div>
+
+
+        <!-- NOTE -->
+        <div class="form-group full-width">
+
+          <label for="expenseNote">Expense Note</label>
+
+          <textarea
+            id="expenseNote"
+            rows="4"
+            placeholder="What did you spend on?"
+          ></textarea>
+
+          <small class="error-message" id="noteError"></small>
+
+        </div>
+
+
+        <div class="form-actions">
+
+          <button
+            type="submit"
+            class="primary-btn"
+            id="expenseSubmitBtn"
+          >
+            + Add Extra Expense
+          </button>
+
+          <button
+            type="button"
+            class="secondary-btn hidden"
+            id="cancelEditBtn"
+          >
+            Cancel Edit
+          </button>
+
+        </div>
+
+      </form>
+
+    </section>
+
+
+    <!-- RECENT EXPENSES -->
+    <section class="card">
+
+      <div class="section-heading">
+        <div>
+          <h2>Recent Extra Expenses</h2>
+          <p>
+            Your latest daily expenses.
+          </p>
+        </div>
+      </div>
+
+
+      <div id="expensesList" class="expenses-list">
+
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">₹</div>
+
+          <h3>No extra expenses added yet.</h3>
+
+          <p>
+            Add your first daily expense above.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SUMMARY -->
+    <section class="summary-section">
+
+      <div class="section-heading">
+        <div>
+          <h2>Expense Summary</h2>
+          <p>
+            Your current expense overview.
+          </p>
+        </div>
+      </div>
+
+
+      <div class="summary-grid">
+
+        <!-- MONTHLY -->
+        <div class="summary-card">
+          <div class="summary-icon">📊</div>
+
+          <div>
+            <p>Total Monthly Expenses</p>
+
+            <h3 id="monthlyTotal">
+              ₹0
+            </h3>
+          </div>
+        </div>
+
+
+        <!-- EXTRA -->
+        <div class="summary-card">
+          <div class="summary-icon">＋</div>
+
+          <div>
+            <p>Total Extra Expenses</p>
+
+            <h3 id="extraTotal">
+              ₹0
+            </h3>
+          </div>
+        </div>
+
+
+        <!-- OVERALL -->
+        <div class="summary-card highlight">
+          <div class="summary-icon">₹</div>
+
+          <div>
+            <p>Overall Expenses</p>
+
+            <h3 id="overallTotal">
+              ₹0
+            </h3>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- DASHBOARD BUTTON -->
+    <div class="dashboard-action">
+
+      <button
+        type="button"
+        class="dashboard-btn"
+        id="dashboardBtn"
+      >
+        Go to Dashboard
+        <span>→</span>
+      </button>
+
+    </div>
+
+
+  </main>
+
+
+  <!-- SUCCESS TOAST -->
+  <div
+    id="toast"
+    class="toast"
+  >
+    <span>✓</span>
+    <p>Expense added successfully.</p>
+  </div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
+=======
+
+>>>>>>> 42020a305e3f97ab71fbe2d83e1f623504d7364f
