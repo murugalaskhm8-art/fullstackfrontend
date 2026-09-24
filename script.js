@@ -1,649 +1,353 @@
-/* ========================================
-   ELEMENTS
-======================================== */
+// ================================
+// Expense Tracker - Page 1
+// ================================
 
-const loginForm = document.getElementById("loginForm");
+// LocalStorage Keys
+const MONTHLY_KEY = "expenseTracker_monthlyExpenses";
+const EXTRA_KEY = "expenseTracker_extraExpenses";
 
-const createAccountButton =
-    document.getElementById("createAccountButton");
+// ================================
+// DOM Elements
+// ================================
 
-const profileSection =
-    document.getElementById("profileSection");
+const monthlyInputs = document.querySelectorAll(".monthly-input");
 
-const profileForm =
-    document.getElementById("profileForm");
+const dateInput = document.getElementById("expenseDate");
+const amountInput = document.getElementById("extraAmount");
+const noteInput = document.getElementById("expenseNote");
 
-const maritalStatus =
-    document.getElementById("maritalStatus");
+const addExtraBtn = document.getElementById("addExtraExpense");
+const recentExpensesList = document.getElementById("recentExpensesList");
 
-const familyGroup =
-    document.getElementById("familyGroup");
+const totalMonthlyEl = document.getElementById("totalMonthly");
+const totalExtraEl = document.getElementById("totalExtra");
+const overallExpensesEl = document.getElementById("overallExpenses");
 
-const successMessage =
-    document.getElementById("successMessage");
+const dashboardBtn = document.getElementById("dashboardBtn");
 
-const loginError =
-    document.getElementById("loginError");
+// ================================
+// Load Data
+// ================================
 
-const dashboard =
-    document.getElementById("dashboard");
+let monthlyExpenses = JSON.parse(
+    localStorage.getItem(MONTHLY_KEY)
+) || {
+    Food: 0,
+    Transportation: 0,
+    Rent: 0,
+    Groceries: 0,
+    Internet: 0,
+    Gas: 0
+};
 
-const userName =
-    document.getElementById("userName");
+let extraExpenses = JSON.parse(
+    localStorage.getItem(EXTRA_KEY)
+) || [];
 
-const logoutButton =
-    document.getElementById("logoutButton");
+// ================================
+// Set Today's Date
+// ================================
 
+if (dateInput) {
+    const today = new Date();
 
-/* ========================================
-   PROFILE INPUTS
-======================================== */
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
 
-const profileName =
-    document.getElementById("profileName");
-
-const gender =
-    document.getElementById("gender");
-
-const salary =
-    document.getElementById("salary");
-
-const profileEmail =
-    document.getElementById("profileEmail");
-
-const profilePassword =
-    document.getElementById("profilePassword");
-
-const familyMembers =
-    document.getElementById("familyMembers");
-
-
-/* ========================================
-   LOGIN INPUTS
-======================================== */
-
-const loginEmail =
-    document.getElementById("loginEmail");
-
-const loginPassword =
-    document.getElementById("loginPassword");
-
-
-/* ========================================
-   CREATE ACCOUNT
-======================================== */
-
-createAccountButton.addEventListener(
-    "click",
-    function () {
-
-        /*
-         * Show profile form
-         */
-        profileSection.classList.remove("hidden");
-
-
-        /*
-         * Scroll smoothly to profile
-         */
-        setTimeout(function () {
-
-            profileSection.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-
-        }, 100);
-
-    }
-);
-
-
-/* ========================================
-   MARITAL STATUS
-======================================== */
-
-maritalStatus.addEventListener(
-    "change",
-    function () {
-
-        if (maritalStatus.value === "Married") {
-
-            familyGroup.classList.remove("hidden");
-
-        } else {
-
-            familyGroup.classList.add("hidden");
-
-            familyMembers.value = "";
-
-        }
-
-    }
-);
-
-
-/* ========================================
-   PASSWORD SHOW / HIDE
-======================================== */
-
-function setupPasswordToggle(
-    input,
-    button
-) {
-
-    button.addEventListener(
-        "click",
-        function () {
-
-            if (input.type === "password") {
-
-                input.type = "text";
-
-                button.textContent = "🙈";
-
-            } else {
-
-                input.type = "password";
-
-                button.textContent = "👁";
-
-            }
-
-        }
-    );
-
+    dateInput.value = `${year}-${month}-${day}`;
 }
 
+// ================================
+// Load Monthly Values
+// ================================
 
-setupPasswordToggle(
-    loginPassword,
-    document.getElementById(
-        "loginPasswordToggle"
-    )
-);
+monthlyInputs.forEach((input) => {
+    const category = input.dataset.category;
 
-
-setupPasswordToggle(
-    profilePassword,
-    document.getElementById(
-        "profilePasswordToggle"
-    )
-);
-
-
-/* ========================================
-   VALIDATION
-======================================== */
-
-function clearErrors() {
-
-    document.getElementById(
-        "nameError"
-    ).textContent = "";
-
-    document.getElementById(
-        "genderError"
-    ).textContent = "";
-
-    document.getElementById(
-        "salaryError"
-    ).textContent = "";
-
-    document.getElementById(
-        "emailError"
-    ).textContent = "";
-
-    document.getElementById(
-        "passwordError"
-    ).textContent = "";
-
-    document.getElementById(
-        "maritalError"
-    ).textContent = "";
-
-}
-
-
-function validateProfile() {
-
-    clearErrors();
-
-    let valid = true;
-
-
-    /* Name */
-
-    if (profileName.value.trim() === "") {
-
-        document.getElementById(
-            "nameError"
-        ).textContent =
-            "Please enter your full name.";
-
-        valid = false;
-
+    if (category && monthlyExpenses[category] !== undefined) {
+        input.value =
+            monthlyExpenses[category] === 0
+                ? ""
+                : monthlyExpenses[category];
     }
+});
 
+// ================================
+// Monthly Expense Input
+// ================================
 
-    /* Gender */
+monthlyInputs.forEach((input) => {
+    input.addEventListener("input", () => {
+        const category = input.dataset.category;
 
-    if (gender.value === "") {
+        let value = parseFloat(input.value);
 
-        document.getElementById(
-            "genderError"
-        ).textContent =
-            "Please select your gender.";
-
-        valid = false;
-
-    }
-
-
-    /* Salary */
-
-    if (
-        salary.value === "" ||
-        Number(salary.value) < 0
-    ) {
-
-        document.getElementById(
-            "salaryError"
-        ).textContent =
-            "Please enter your monthly salary.";
-
-        valid = false;
-
-    }
-
-
-    /* Email */
-
-    if (profileEmail.value.trim() === "") {
-
-        document.getElementById(
-            "emailError"
-        ).textContent =
-            "Please enter your email.";
-
-        valid = false;
-
-    } else if (
-        !profileEmail.value.includes("@")
-    ) {
-
-        document.getElementById(
-            "emailError"
-        ).textContent =
-            "Please enter a valid email.";
-
-        valid = false;
-
-    }
-
-
-    /* Password */
-
-    if (profilePassword.value === "") {
-
-        document.getElementById(
-            "passwordError"
-        ).textContent =
-            "Please create a password.";
-
-        valid = false;
-
-    } else if (
-        profilePassword.value.length < 6
-    ) {
-
-        document.getElementById(
-            "passwordError"
-        ).textContent =
-            "Password must contain at least 6 characters.";
-
-        valid = false;
-
-    }
-
-
-    /* Marital Status */
-
-    if (maritalStatus.value === "") {
-
-        document.getElementById(
-            "maritalError"
-        ).textContent =
-            "Please select your marital status.";
-
-        valid = false;
-
-    }
-
-
-    return valid;
-
-}
-
-
-/* ========================================
-   SUBMIT PROFILE
-======================================== */
-
-profileForm.addEventListener(
-    "submit",
-    function (event) {
-
-        event.preventDefault();
-
-
-        /*
-         * Validate
-         */
-
-        if (!validateProfile()) {
-
-            return;
-
+        if (isNaN(value) || value < 0) {
+            value = 0;
         }
 
-
-        /*
-         * Create profile object
-         */
-
-        const profileData = {
-
-            name:
-                profileName.value.trim(),
-
-            gender:
-                gender.value,
-
-            salary:
-                salary.value,
-
-            email:
-                profileEmail.value.trim()
-                    .toLowerCase(),
-
-            password:
-                profilePassword.value,
-
-            maritalStatus:
-                maritalStatus.value,
-
-            familyMembers:
-                maritalStatus.value === "Married"
-                    ? familyMembers.value
-                    : "1"
-
-        };
-
-
-        /*
-         * Save to localStorage
-         */
+        monthlyExpenses[category] = value;
 
         localStorage.setItem(
-            "expenseTrackerUser",
-            JSON.stringify(profileData)
+            MONTHLY_KEY,
+            JSON.stringify(monthlyExpenses)
         );
 
+        updateSummary();
+    });
+});
 
-        /*
-         * Pre-fill login email
-         */
+// ================================
+// Add Extra Expense
+// ================================
 
-        loginEmail.value =
-            profileData.email;
+if (addExtraBtn) {
+    addExtraBtn.addEventListener("click", () => {
+        const date = dateInput.value;
+        const amount = parseFloat(amountInput.value);
+        const note = noteInput.value.trim();
 
-
-        /*
-         * Password must remain empty
-         */
-
-        loginPassword.value = "";
-
-
-        /*
-         * Hide profile section
-         */
-
-        profileSection.classList.add(
-            "hidden"
-        );
-
-
-        /*
-         * Clear profile form
-         */
-
-        profileForm.reset();
-
-        familyGroup.classList.add(
-            "hidden"
-        );
-
-        clearErrors();
-
-
-        /*
-         * Show success message
-         */
-
-        successMessage.classList.remove(
-            "hidden"
-        );
-
-
-        loginError.classList.add(
-            "hidden"
-        );
-
-
-        /*
-         * Scroll to login
-         */
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
-    }
-);
-
-
-/* ========================================
-   LOGIN
-======================================== */
-
-loginForm.addEventListener(
-    "submit",
-    function (event) {
-
-        event.preventDefault();
-
-
-        /*
-         * Get saved account
-         */
-
-        const savedUser =
-            localStorage.getItem(
-                "expenseTrackerUser"
-            );
-
-
-        /*
-         * No account
-         */
-
-        if (!savedUser) {
-
-            loginError.textContent =
-                "Please create an account first.";
-
-            loginError.classList.remove(
-                "hidden"
-            );
-
-            successMessage.classList.add(
-                "hidden"
-            );
-
+        // Validation
+        if (!date) {
+            alert("Please select a date.");
             return;
-
         }
 
-
-        /*
-         * Convert JSON to object
-         */
-
-        const user =
-            JSON.parse(savedUser);
-
-
-        const enteredEmail =
-            loginEmail.value
-                .trim()
-                .toLowerCase();
-
-        const enteredPassword =
-            loginPassword.value;
-
-
-        /*
-         * Check credentials
-         */
-
-        if (
-            enteredEmail === user.email &&
-            enteredPassword === user.password
-        ) {
-
-            /*
-             * Successful login
-             */
-
-            loginError.classList.add(
-                "hidden"
-            );
-
-            successMessage.classList.add(
-                "hidden"
-            );
-
-
-            /*
-             * Show dashboard
-             */
-
-            document.querySelector(
-                ".auth-wrapper"
-            ).classList.add(
-                "hidden"
-            );
-
-            dashboard.classList.remove(
-                "hidden"
-            );
-
-
-            /*
-             * Display user's name
-             */
-
-            userName.textContent =
-                user.name;
-
-        } else {
-
-            /*
-             * Invalid login
-             */
-
-            loginError.textContent =
-                "Invalid email or password.";
-
-            loginError.classList.remove(
-                "hidden"
-            );
-
-            successMessage.classList.add(
-                "hidden"
-            );
-
+        if (isNaN(amount) || amount <= 0) {
+            alert("Please enter a valid expense amount.");
+            return;
         }
 
+        if (!note) {
+            alert("Please enter an expense note.");
+            return;
+        }
+
+        // Create expense object
+        const newExpense = {
+            id: Date.now(),
+            date: date,
+            amount: amount,
+            note: note
+        };
+
+        // Add newest expense first
+        extraExpenses.unshift(newExpense);
+
+        // Save
+        localStorage.setItem(
+            EXTRA_KEY,
+            JSON.stringify(extraExpenses)
+        );
+
+        // Clear inputs
+        amountInput.value = "";
+        noteInput.value = "";
+
+        // Update UI
+        renderExtraExpenses();
+        updateSummary();
+    });
+}
+
+// ================================
+// Render Extra Expenses
+// ================================
+
+function renderExtraExpenses() {
+    if (!recentExpensesList) return;
+
+    recentExpensesList.innerHTML = "";
+
+    if (extraExpenses.length === 0) {
+        recentExpensesList.innerHTML = `
+            <div class="empty-state">
+                No extra expenses added yet.
+            </div>
+        `;
+
+        return;
     }
-);
 
+    extraExpenses.forEach((expense) => {
+        const expenseItem = document.createElement("div");
 
-/* ========================================
-   LOGOUT
-======================================== */
+        expenseItem.className = "expense-item";
 
-logoutButton.addEventListener(
-    "click",
-    function () {
+        expenseItem.innerHTML = `
+            <div class="expense-info">
+                <div class="expense-note">
+                    ${escapeHTML(expense.note)}
+                </div>
 
-        /*
-         * Hide dashboard
-         */
+                <div class="expense-date">
+                    ${formatDate(expense.date)}
+                </div>
+            </div>
 
-        dashboard.classList.add(
-            "hidden"
-        );
+            <div class="expense-right">
+                <div class="expense-amount">
+                    ₹${Number(expense.amount).toFixed(2)}
+                </div>
 
+                <div class="expense-actions">
+                    <button
+                        class="edit-btn"
+                        onclick="editExpense(${expense.id})"
+                    >
+                        Edit
+                    </button>
 
-        /*
-         * Show login
-         */
+                    <button
+                        class="delete-btn"
+                        onclick="deleteExpense(${expense.id})"
+                    >
+                        Delete
+                    </button>
+                </div>
+            </div>
+        `;
 
-        document.querySelector(
-            ".auth-wrapper"
-        ).classList.remove(
-            "hidden"
-        );
+        recentExpensesList.appendChild(expenseItem);
+    });
+}
 
+// ================================
+// Edit Extra Expense
+// ================================
 
-        /*
-         * Clear password
-         */
+function editExpense(id) {
+    const expense = extraExpenses.find(
+        (item) => item.id === id
+    );
 
-        loginPassword.value = "";
+    if (!expense) return;
 
+    dateInput.value = expense.date;
+    amountInput.value = expense.amount;
+    noteInput.value = expense.note;
 
-        /*
-         * Hide messages
-         */
+    // Remove old expense
+    extraExpenses = extraExpenses.filter(
+        (item) => item.id !== id
+    );
 
-        loginError.classList.add(
-            "hidden"
-        );
+    localStorage.setItem(
+        EXTRA_KEY,
+        JSON.stringify(extraExpenses)
+    );
 
-        successMessage.classList.add(
-            "hidden"
-        );
+    renderExtraExpenses();
+    updateSummary();
 
+    // Scroll to input section
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
 
-        /*
-         * Go to top
-         */
+// ================================
+// Delete Extra Expense
+// ================================
 
-        window.scrollTo({
+function deleteExpense(id) {
+    const confirmDelete = confirm(
+        "Are you sure you want to delete this expense?"
+    );
 
-            top: 0,
+    if (!confirmDelete) return;
 
-            behavior: "smooth"
+    extraExpenses = extraExpenses.filter(
+        (item) => item.id !== id
+    );
 
-        });
+    localStorage.setItem(
+        EXTRA_KEY,
+        JSON.stringify(extraExpenses)
+    );
 
+    renderExtraExpenses();
+    updateSummary();
+}
+
+// ================================
+// Update Expense Summary
+// ================================
+
+function updateSummary() {
+    // Monthly total
+    const totalMonthly = Object.values(monthlyExpenses).reduce(
+        (sum, value) => sum + Number(value || 0),
+        0
+    );
+
+    // Extra total
+    const totalExtra = extraExpenses.reduce(
+        (sum, expense) => sum + Number(expense.amount || 0),
+        0
+    );
+
+    // Overall
+    const overall = totalMonthly + totalExtra;
+
+    if (totalMonthlyEl) {
+        totalMonthlyEl.textContent =
+            `₹${totalMonthly.toFixed(2)}`;
     }
-);
+
+    if (totalExtraEl) {
+        totalExtraEl.textContent =
+            `₹${totalExtra.toFixed(2)}`;
+    }
+
+    if (overallExpensesEl) {
+        overallExpensesEl.textContent =
+            `₹${overall.toFixed(2)}`;
+    }
+}
+
+// ================================
+// Format Date
+// ================================
+
+function formatDate(dateString) {
+    const date = new Date(dateString + "T00:00:00");
+
+    return date.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
+}
+
+// ================================
+// Escape HTML
+// ================================
+
+function escapeHTML(value) {
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+// ================================
+// DASHBOARD BUTTON
+// ================================
+
+if (dashboardBtn) {
+    dashboardBtn.addEventListener("click", () => {
+        window.location.href = "dashboard.html";
+    });
+}
+
+// ================================
+// Initial Load
+// ================================
+
+renderExtraExpenses();
+updateSummary();

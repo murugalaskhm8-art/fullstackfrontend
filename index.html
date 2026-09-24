@@ -1,454 +1,384 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Expense Tracker</title>
+  <title>Expense Tracker</title>
 
-    <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-    <main class="page-container">
+  <main class="app-container">
 
-        <!-- =========================
-             AUTH SECTION
-        ========================== -->
+    <!-- HEADER -->
+    <header class="page-header">
+      <div>
+        <div class="brand">
+          <div class="brand-icon">₹</div>
+          <span>Expense Tracker</span>
+        </div>
 
-        <section class="auth-wrapper">
+        <h1>Manage Your Expenses</h1>
 
-            <!-- LOGIN CARD -->
-            <div class="auth-card">
-
-                <!-- Logo -->
-                <div class="logo">
-                    <div class="logo-icon">
-                        ₹
-                    </div>
-
-                    <div>
-                        <h1>Expense Tracker</h1>
-                        <p>Track • Save • Grow</p>
-                    </div>
-                </div>
+        <p>
+          Plan your regular expenses and keep track of your daily spending.
+        </p>
+      </div>
+    </header>
 
 
-                <!-- Login Heading -->
-                <div class="welcome-section">
+    <!-- MONTHLY EXPENSES -->
+    <section class="card">
 
-                    <h2>Welcome Back!</h2>
+      <div class="section-heading">
+        <div>
+          <h2>Monthly Expenses</h2>
+          <p>
+            Enter how much you expect to spend on each category every month.
+          </p>
+        </div>
+      </div>
 
-                    <p>
-                        Sign in to continue to your account
-                    </p>
+      <div class="monthly-grid">
 
-                </div>
+        <!-- FOOD -->
+        <div class="expense-input">
+          <label for="food">Food</label>
 
-
-                <!-- Success Message -->
-                <div
-                    id="successMessage"
-                    class="message success-message hidden"
-                >
-                    ✓ Account created successfully.
-                    Please sign in.
-                </div>
-
-
-                <!-- Error Message -->
-                <div
-                    id="loginError"
-                    class="message error-message hidden"
-                >
-                    Invalid email or password.
-                </div>
-
-
-                <!-- LOGIN FORM -->
-                <form id="loginForm">
-
-                    <!-- Email -->
-                    <div class="input-group">
-
-                        <label for="loginEmail">
-                            Email Address / Username
-                        </label>
-
-                        <input
-                            type="email"
-                            id="loginEmail"
-                            placeholder="Enter your email address"
-                            autocomplete="email"
-                        >
-
-                    </div>
+          <div class="amount-input">
+            <span>₹</span>
+            <input
+              type="number"
+              id="food"
+              class="monthly-amount"
+              data-category="food"
+              min="0"
+              step="0.01"
+              placeholder="Enter amount"
+            />
+          </div>
+        </div>
 
 
-                    <!-- Password -->
-                    <div class="input-group">
+        <!-- TRANSPORTATION -->
+        <div class="expense-input">
+          <label for="transportation">Transportation</label>
 
-                        <label for="loginPassword">
-                            Password
-                        </label>
-
-                        <div class="password-wrapper">
-
-                            <input
-                                type="password"
-                                id="loginPassword"
-                                placeholder="Enter your password"
-                                autocomplete="current-password"
-                            >
-
-                            <button
-                                type="button"
-                                class="password-toggle"
-                                id="loginPasswordToggle"
-                            >
-                                👁
-                            </button>
-
-                        </div>
-
-                    </div>
+          <div class="amount-input">
+            <span>₹</span>
+            <input
+              type="number"
+              id="transportation"
+              class="monthly-amount"
+              data-category="transportation"
+              min="0"
+              step="0.01"
+              placeholder="Enter amount"
+            />
+          </div>
+        </div>
 
 
-                    <!-- Sign In -->
-                    <button
-                        type="submit"
-                        class="primary-button"
-                    >
-                        Sign In
-                    </button>
+        <!-- RENT -->
+        <div class="expense-input">
+          <label for="rent">Rent</label>
 
-                </form>
-
-
-                <!-- Divider -->
-                <div class="divider">
-
-                    <span></span>
-
-                    <p>OR</p>
-
-                    <span></span>
-
-                </div>
+          <div class="amount-input">
+            <span>₹</span>
+            <input
+              type="number"
+              id="rent"
+              class="monthly-amount"
+              data-category="rent"
+              min="0"
+              step="0.01"
+              placeholder="Enter amount"
+            />
+          </div>
+        </div>
 
 
-                <!-- Create Account -->
-                <button
-                    type="button"
-                    class="create-button"
-                    id="createAccountButton"
-                >
-                    <span>+</span>
-                    Create Account
-                </button>
+        <!-- GROCERIES -->
+        <div class="expense-input">
+          <label for="groceries">Groceries</label>
+
+          <div class="amount-input">
+            <span>₹</span>
+            <input
+              type="number"
+              id="groceries"
+              class="monthly-amount"
+              data-category="groceries"
+              min="0"
+              step="0.01"
+              placeholder="Enter amount"
+            />
+          </div>
+        </div>
 
 
-                <p class="forgot-password">
-                    Forgot your password?
-                </p>
+        <!-- INTERNET -->
+        <div class="expense-input">
+          <label for="internet">Internet</label>
 
+          <div class="amount-input">
+            <span>₹</span>
+            <input
+              type="number"
+              id="internet"
+              class="monthly-amount"
+              data-category="internet"
+              min="0"
+              step="0.01"
+              placeholder="Enter amount"
+            />
+          </div>
+        </div>
+
+
+        <!-- GAS -->
+        <div class="expense-input">
+          <label for="gas">Gas</label>
+
+          <div class="amount-input">
+            <span>₹</span>
+            <input
+              type="number"
+              id="gas"
+              class="monthly-amount"
+              data-category="gas"
+              min="0"
+              step="0.01"
+              placeholder="Enter amount"
+            />
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- DAILY EXTRA EXPENSE -->
+    <section class="card">
+
+      <div class="section-heading">
+        <div>
+          <h2>Daily Extra Expenses</h2>
+          <p>
+            Record unexpected or additional expenses.
+          </p>
+        </div>
+      </div>
+
+
+      <form id="extraExpenseForm">
+
+        <div class="form-grid">
+
+          <!-- DATE -->
+          <div class="form-group">
+            <label for="expenseDate">Select Date</label>
+
+            <div class="input-with-icon">
+              <span class="field-icon">📅</span>
+
+              <input
+                type="date"
+                id="expenseDate"
+              />
             </div>
 
-
-            <!-- =========================
-                 PROFILE FORM
-                 HIDDEN INITIALLY
-            ========================== -->
-
-            <div
-                id="profileSection"
-                class="profile-card hidden"
-            >
-
-                <div class="profile-header">
-
-                    <div class="profile-icon">
-                        👤
-                    </div>
-
-                    <div>
-
-                        <h2>Create Your Profile</h2>
-
-                        <p>
-                            Enter your details to create your
-                            Expense Tracker account.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- PROFILE FORM -->
-
-                <form id="profileForm">
-
-
-                    <!-- Name -->
-                    <div class="input-group">
-
-                        <label for="profileName">
-                            Full Name
-                        </label>
-
-                        <input
-                            type="text"
-                            id="profileName"
-                            placeholder="Enter your full name"
-                        >
-
-                        <small
-                            id="nameError"
-                            class="field-error"
-                        ></small>
-
-                    </div>
-
-
-                    <!-- Gender -->
-                    <div class="input-group">
-
-                        <label for="gender">
-                            Gender
-                        </label>
-
-                        <select id="gender">
-
-                            <option value="">
-                                Select gender
-                            </option>
-
-                            <option value="Male">
-                                Male
-                            </option>
-
-                            <option value="Female">
-                                Female
-                            </option>
-
-                            <option value="Other">
-                                Other
-                            </option>
-
-                            <option value="Prefer not to say">
-                                Prefer not to say
-                            </option>
-
-                        </select>
-
-                        <small
-                            id="genderError"
-                            class="field-error"
-                        ></small>
-
-                    </div>
-
-
-                    <!-- Salary -->
-                    <div class="input-group">
-
-                        <label for="salary">
-                            Monthly Salary
-                        </label>
-
-                        <div class="currency-input">
-
-                            <span>₹</span>
-
-                            <input
-                                type="number"
-                                id="salary"
-                                placeholder="Enter your monthly salary"
-                                min="0"
-                            >
-
-                        </div>
-
-                        <small
-                            id="salaryError"
-                            class="field-error"
-                        ></small>
-
-                    </div>
-
-
-                    <!-- Email -->
-                    <div class="input-group">
-
-                        <label for="profileEmail">
-                            Email Address
-                        </label>
-
-                        <input
-                            type="email"
-                            id="profileEmail"
-                            placeholder="Enter your email address"
-                        >
-
-                        <small
-                            id="emailError"
-                            class="field-error"
-                        ></small>
-
-                    </div>
-
-
-                    <!-- Password -->
-                    <div class="input-group">
-
-                        <label for="profilePassword">
-                            Password
-                        </label>
-
-                        <div class="password-wrapper">
-
-                            <input
-                                type="password"
-                                id="profilePassword"
-                                placeholder="Create a password"
-                            >
-
-                            <button
-                                type="button"
-                                class="password-toggle"
-                                id="profilePasswordToggle"
-                            >
-                                👁
-                            </button>
-
-                        </div>
-
-                        <small
-                            id="passwordError"
-                            class="field-error"
-                        ></small>
-
-                    </div>
-
-
-                    <!-- Marital Status -->
-                    <div class="input-group">
-
-                        <label for="maritalStatus">
-                            Marital Status
-                        </label>
-
-                        <select id="maritalStatus">
-
-                            <option value="">
-                                Select marital status
-                            </option>
-
-                            <option value="Single">
-                                Single
-                            </option>
-
-                            <option value="Married">
-                                Married
-                            </option>
-
-                        </select>
-
-                        <small
-                            id="maritalError"
-                            class="field-error"
-                        ></small>
-
-                    </div>
-
-
-                    <!-- Family Members -->
-                    <div
-                        id="familyGroup"
-                        class="input-group hidden"
-                    >
-
-                        <label for="familyMembers">
-                            Number of Family Members
-                        </label>
-
-                        <input
-                            type="number"
-                            id="familyMembers"
-                            placeholder="Enter number of family members"
-                            min="1"
-                        >
-
-                    </div>
-
-
-                    <!-- Submit -->
-                    <button
-                        type="submit"
-                        class="primary-button submit-button"
-                    >
-                        Submit
-                    </button>
-
-                </form>
-
+            <small class="error-message" id="dateError"></small>
+          </div>
+
+
+          <!-- AMOUNT -->
+          <div class="form-group">
+            <label for="extraAmount">Extra Expense Amount</label>
+
+            <div class="amount-input">
+              <span>₹</span>
+
+              <input
+                type="number"
+                id="extraAmount"
+                min="0"
+                step="0.01"
+                placeholder="Enter amount"
+              />
             </div>
 
-        </section>
+            <small class="error-message" id="amountError"></small>
+          </div>
+
+        </div>
 
 
-        <!-- =========================
-             DASHBOARD
-        ========================== -->
+        <!-- NOTE -->
+        <div class="form-group full-width">
 
-        <section
-            id="dashboard"
-            class="dashboard hidden"
-        >
+          <label for="expenseNote">Expense Note</label>
 
-            <div class="dashboard-card">
+          <textarea
+            id="expenseNote"
+            rows="4"
+            placeholder="What did you spend on?"
+          ></textarea>
 
-                <div class="dashboard-logo">
-                    ₹
-                </div>
+          <small class="error-message" id="noteError"></small>
 
-                <h1>
-                    Welcome to Expense Tracker
-                </h1>
-
-                <p>
-                    Hello,
-                    <strong id="userName"></strong>
-                </p>
-
-                <div class="dashboard-placeholder">
-
-                    <h3>Dashboard</h3>
-
-                    <p>
-                        Your expense tracking features
-                        will be developed here.
-                    </p>
-
-                </div>
-
-                <button
-                    id="logoutButton"
-                    class="logout-button"
-                >
-                    Logout
-                </button>
-
-            </div>
-
-        </section>
-
-    </main>
+        </div>
 
 
-    <script src="script.js"></script>
+        <div class="form-actions">
+
+          <button
+            type="submit"
+            class="primary-btn"
+            id="expenseSubmitBtn"
+          >
+            + Add Extra Expense
+          </button>
+
+          <button
+            type="button"
+            class="secondary-btn hidden"
+            id="cancelEditBtn"
+          >
+            Cancel Edit
+          </button>
+
+        </div>
+
+      </form>
+
+    </section>
+
+
+    <!-- RECENT EXPENSES -->
+    <section class="card">
+
+      <div class="section-heading">
+        <div>
+          <h2>Recent Extra Expenses</h2>
+          <p>
+            Your latest daily expenses.
+          </p>
+        </div>
+      </div>
+
+
+      <div id="expensesList" class="expenses-list">
+
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">₹</div>
+
+          <h3>No extra expenses added yet.</h3>
+
+          <p>
+            Add your first daily expense above.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SUMMARY -->
+    <section class="summary-section">
+
+      <div class="section-heading">
+        <div>
+          <h2>Expense Summary</h2>
+          <p>
+            Your current expense overview.
+          </p>
+        </div>
+      </div>
+
+
+      <div class="summary-grid">
+
+        <!-- MONTHLY -->
+        <div class="summary-card">
+          <div class="summary-icon">📊</div>
+
+          <div>
+            <p>Total Monthly Expenses</p>
+
+            <h3 id="monthlyTotal">
+              ₹0
+            </h3>
+          </div>
+        </div>
+
+
+        <!-- EXTRA -->
+        <div class="summary-card">
+          <div class="summary-icon">＋</div>
+
+          <div>
+            <p>Total Extra Expenses</p>
+
+            <h3 id="extraTotal">
+              ₹0
+            </h3>
+          </div>
+        </div>
+
+
+        <!-- OVERALL -->
+        <div class="summary-card highlight">
+          <div class="summary-icon">₹</div>
+
+          <div>
+            <p>Overall Expenses</p>
+
+            <h3 id="overallTotal">
+              ₹0
+            </h3>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- DASHBOARD BUTTON -->
+    <div class="dashboard-action">
+
+      <button
+        type="button"
+        class="dashboard-btn"
+        id="dashboardBtn"
+      >
+        Go to Dashboard
+        <span>→</span>
+      </button>
+
+    </div>
+
+
+  </main>
+
+
+  <!-- SUCCESS TOAST -->
+  <div
+    id="toast"
+    class="toast"
+  >
+    <span>✓</span>
+    <p>Expense added successfully.</p>
+  </div>
+
+
+  <script src="script.js"></script>
 
 </body>
 </html>
