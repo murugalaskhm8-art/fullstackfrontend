@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Expense Tracker - Dashboard</title>
+
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+
+<body>
+
+  <div class="dashboard-container">
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="dashboard-header">
+
+      <div class="brand">
+        <div class="brand-icon">₹</div>
+        <span>Expense Tracker</span>
+      </div>
+
+      <nav>
+        <a href="index.html">Expense Input</a>
+
+        <a href="dashboard.html" class="active">
+          Dashboard
+        </a>
+      </nav>
+
+    </header>
+
+
+    <!-- =========================
+         PAGE HEADING
+    ========================== -->
+
+    <section class="welcome-section">
+
+      <div>
+        <p class="eyebrow">
+          FINANCIAL OVERVIEW
+        </p>
+
+        <h1>
+          Your Expense Dashboard
+        </h1>
+
+        <p class="welcome-text">
+          Here's an overview of your planned and additional expenses.
+        </p>
+      </div>
+
+      <a
+        href="index.html"
+        class="add-expense-btn"
+      >
+        + Add Expense
+      </a>
+
+    </section>
+
+
+    <!-- =========================
+         SUMMARY CARDS
+    ========================== -->
+
+    <section class="summary-grid">
+
+      <!-- MONTHLY -->
+      <div class="summary-card">
+
+        <div class="card-top">
+          <span>Monthly Planned</span>
+
+          <div class="card-icon">
+            📊
+          </div>
+        </div>
+
+        <h2 id="monthlyTotal">
+          ₹0
+        </h2>
+
+        <p>
+          Regular monthly expenses
+        </p>
+
+      </div>
+
+
+      <!-- EXTRA -->
+      <div class="summary-card">
+
+        <div class="card-top">
+          <span>Daily Extra</span>
+
+          <div class="card-icon">
+            ＋
+          </div>
+        </div>
+
+        <h2 id="extraTotal">
+          ₹0
+        </h2>
+
+        <p>
+          Additional daily expenses
+        </p>
+
+      </div>
+
+
+      <!-- OVERALL -->
+      <div class="summary-card highlight">
+
+        <div class="card-top">
+          <span>Overall Expenses</span>
+
+          <div class="card-icon">
+            ₹
+          </div>
+        </div>
+
+        <h2 id="overallTotal">
+          ₹0
+        </h2>
+
+        <p>
+          Total tracked expenses
+        </p>
+
+      </div>
+
+
+      <!-- HIGHEST -->
+      <div class="summary-card">
+
+        <div class="card-top">
+          <span>Highest Category</span>
+
+          <div class="card-icon">
+            ↑
+          </div>
+        </div>
+
+        <h2
+          id="highestCategory"
+          class="category-value"
+        >
+          No data
+        </h2>
+
+        <p id="highestAmount">
+          ₹0
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <section class="content-grid">
+
+
+      <!-- =========================
+           MONTHLY BREAKDOWN
+      ========================== -->
+
+      <div class="panel">
+
+        <div class="panel-header">
+
+          <div>
+            <h2>
+              Monthly Expense Breakdown
+            </h2>
+
+            <p>
+              Your regular spending categories
+            </p>
+          </div>
+
+        </div>
+
+
+        <div
+          id="categoryList"
+          class="category-list"
+        >
+
+          <!-- JavaScript will insert categories -->
+
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           EXPENSE OVERVIEW
+      ========================== -->
+
+      <div class="panel">
+
+        <div class="panel-header">
+
+          <div>
+            <h2>
+              Expense Overview
+            </h2>
+
+            <p>
+              Monthly vs daily extra spending
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="overview-chart">
+
+          <div class="chart-circle">
+
+            <div class="chart-center">
+
+              <span>Total</span>
+
+              <strong id="chartTotal">
+                ₹0
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="chart-legend">
+
+            <div class="legend-item">
+
+              <span class="legend-dot monthly-dot"></span>
+
+              <div>
+                <strong>
+                  Monthly
+                </strong>
+
+                <small id="chartMonthly">
+                  ₹0
+                </small>
+              </div>
+
+            </div>
+
+
+            <div class="legend-item">
+
+              <span class="legend-dot extra-dot"></span>
+
+              <div>
+                <strong>
+                  Extra
+                </strong>
+
+                <small id="chartExtra">
+                  ₹0
+                </small>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         CATEGORY BARS
+    ========================== -->
+
+    <section class="panel full-panel">
+
+      <div class="panel-header">
+
+        <div>
+          <h2>
+            Spending Distribution
+          </h2>
+
+          <p>
+            Percentage of your monthly planned expenses
+          </p>
+        </div>
+
+      </div>
+
+
+      <div
+        id="distributionList"
+        class="distribution-list"
+      >
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         RECENT EXTRA EXPENSES
+    ========================== -->
+
+    <section class="panel full-panel">
+
+      <div class="panel-header">
+
+        <div>
+          <h2>
+            Recent Extra Expenses
+          </h2>
+
+          <p>
+            Your latest additional spending
+          </p>
+        </div>
+
+        <a href="index.html">
+          Manage Expenses →
+        </a>
+
+      </div>
+
+
+      <div
+        id="recentExpenses"
+        class="recent-expenses"
+      >
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         EMPTY STATE
+    ========================== -->
+
+    <section
+      id="dashboardEmpty"
+      class="empty-dashboard"
+    >
+
+      <div class="empty-dashboard-icon">
+        ₹
+      </div>
+
+      <h2>
+        Start tracking your expenses
+      </h2>
+
+      <p>
+        Add your monthly expenses and daily spending
+        to see your financial overview here.
+      </p>
+
+      <a href="index.html">
+        Add Your First Expense →
+      </a>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+      <span>
+        Expense Tracker
+      </span>
+
+      <span>
+        Personal Expense Management
+      </span>
+
+    </footer>
+
+  </div>
+
+
+  <script src="dashboard.js"></script>
+
+</body>
+</html>
